@@ -1,0 +1,129 @@
+# Microservices analysis configuration
+analysis:
+  # Paths to scan for Go services
+  paths:
+    - ./services
+    - ./cmd
+  
+  # Exclude patterns
+  excludes:
+    - vendor
+    - node_modules
+    - .git
+    - _test.go
+  
+  # Include test files in analysis
+  include_tests: false
+  
+  # Follow import statements to discover more services
+  follow_imports: true
+  
+  # Maximum depth for dependency traversal
+  max_depth: 10
+  
+  # Service naming patterns (glob-style)
+  service_patterns:
+    - "*service*"
+    - "*handler*"
+    - "*controller*"
+    - "*api*"
+
+# Prometheus configuration
+prometheus:
+  # Prometheus server URL
+  url: "http://localhost:9090"
+  
+  # Connection timeout
+  timeout: 30s
+  
+  # Query interval for rate calculations
+  query_interval: 5m
+  
+  # How far back to look for metrics
+  lookback_window: 1h
+  
+  # Custom PromQL queries (optional)
+  custom_queries: {}
+
+# Cost model configuration
+cost_model:
+  # Cloud provider (aws, gcp, azure, custom)
+  provider: "aws"
+  
+  # Cloud region
+  region: "us-east-1"
+  
+  # Cost per CPU core-hour (in USD)
+  cpu_cost_per_core_hour: 0.0416
+  
+  # Cost per GB memory-hour (in USD)
+  memory_cost_per_gb_hour: 0.0052
+  
+  # Cost per GB network transfer (in USD)
+  network_cost_per_gb: 0.09
+  
+  # Cost per GB disk I/O-hour (in USD)
+  disk_cost_per_gb_hour: 0.10
+  
+  # Cost per API request (in USD)
+  request_cost: 0.0000002
+
+# AWS-specific configuration
+aws:
+  # AWS region
+  region: "us-east-1"
+  
+  # AWS credentials (leave empty to use default credential chain)
+  access_key_id: ""
+  secret_access_key: ""
+  
+  # AWS profile name
+  profile_name: "default"
+  
+  # Use AWS Cost Explorer API for real billing data
+  use_cost_explorer: false
+
+# Output configuration
+output:
+  # Default output format (ascii, json, yaml, html)
+  format: "ascii"
+  
+  # Output directory
+  output_path: "./output"
+  
+  # Include metrics in reports
+  include_metrics: true
+  
+  # Include costs in reports
+  include_costs: true
+  
+  # Number of top costly endpoints to highlight
+  top_n: 10
+  
+  # Enable colored output
+  color_enabled: true
+
+# Web server configuration (for 'serve' command)
+server:
+  # Server port
+  port: 8080
+  
+  # Server host
+  host: "localhost"
+  
+  # Auto-refresh interval for live dashboard
+  refresh_interval: 5m
+  
+  # Enable CORS
+  enable_cors: true
+
+# Logging configuration
+logging:
+  # Log level (debug, info, warn, error)
+  level: "info"
+  
+  # Log format (text, json)
+  format: "text"
+  
+  # Log output file (empty for stdout)
+  output_file: ""

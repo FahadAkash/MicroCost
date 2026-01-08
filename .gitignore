@@ -1,0 +1,46 @@
+# Binaries
+microcost
+microcost.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test and coverage
+*.test
+*.out
+coverage.txt
+*.prof
+
+# Output
+output/
+*.json
+*.yaml
+!config.yaml
+!go.mod
+!go.sum
+callgraph.*
+metrics.*
+cost-report.*
+*.html
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies
+vendor/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
