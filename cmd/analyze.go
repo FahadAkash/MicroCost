@@ -25,7 +25,7 @@ var (
 func init() {
 	rootCmd.AddCommand(analyzeCmd)
 
-	analyzeCmd.Flags().StringSliceVarP(&analyzePaths, "paths", "p", []string{"."}, "Paths to analyze")
+	analyzeCmd.Flags().StringSliceVarP(&analyzePaths, "paths", "p", nil, "Paths to analyze")
 	analyzeCmd.Flags().StringVarP(&analyzeOutput, "output", "o", "callgraph.json", "Output file path")
 	analyzeCmd.Flags().StringVarP(&analyzeFormat, "format", "f", "json", "Output format (json, yaml)")
 	analyzeCmd.Flags().BoolVarP(&analyzeVisualize, "visualize", "v", true, "Show ASCII visualization")

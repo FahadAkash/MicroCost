@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/microcost/microcost/pkg/models"
 	"github.com/sirupsen/logrus"
@@ -26,6 +27,11 @@ func NewExporter(logger *logrus.Logger) *Exporter {
 func (e *Exporter) ExportJSON(data interface{}, outputPath string) error {
 	e.logger.Infof("Exporting to JSON: %s", outputPath)
 
+	dir := filepath.Dir(outputPath)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return fmt.Errorf("error creating directory: %w", err)
+	}
+
 	file, err := os.Create(outputPath)
 	if err != nil {
 		return fmt.Errorf("error creating file: %w", err)
@@ -46,6 +52,11 @@ func (e *Exporter) ExportJSON(data interface{}, outputPath string) error {
 // ExportYAML exports data as YAML
 func (e *Exporter) ExportYAML(data interface{}, outputPath string) error {
 	e.logger.Infof("Exporting to YAML: %s", outputPath)
+
+	dir := filepath.Dir(outputPath)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return fmt.Errorf("error creating directory: %w", err)
+	}
 
 	file, err := os.Create(outputPath)
 	if err != nil {

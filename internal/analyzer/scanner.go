@@ -1,7 +1,6 @@
 package analyzer
 
 import (
-	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -47,22 +46,39 @@ func (s *Scanner) Scan() (map[string]*models.Service, error) {
 	return s.services, nil
 }
 
-// scanPath scans a single directory path
+// scanPath scans a single directory path recursively
 func (s *Scanner) scanPath(path string) error {
 	s.logger.Debugf("Scanning path: %s", path)
 
-	// Parse all Go files in the directory
-	pkgs, err := parser.ParseDir(s.fset, path, s.shouldIncludeFile, parser.ParseComments)
-	if err != nil {
-		return fmt.Errorf("error parsing directory: %w", err)
-	}
+	// Recursively walk the directory
+	return filepath.Walk(path, func(currentPath string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
-	for pkgName, pkg := range pkgs {
-		s.logger.Debugf("Analyzing package: %s", pkgName)
-		s.analyzePackage(pkg, path)
-	}
+		if !info.IsDir() {
+			return nil
+		}
 
-	return nil
+		// Skip hidden directories and vendor (and output)
+		if strings.HasPrefix(info.Name(), ".") || info.Name() == "vendor" || info.Name() == "node_modules" || info.Name() == "output" {
+			return filepath.SkipDir
+		}
+
+		// Parse files in this directory (non-recursively, as Walk handles recursion)
+		pkgs, err := parser.ParseDir(s.fset, currentPath, s.shouldIncludeFile, parser.ParseComments)
+		if err != nil {
+			s.logger.WithError(err).Warnf("Error parsing directory: %s", currentPath)
+			return nil
+		}
+
+		for pkgName, pkg := range pkgs {
+			s.logger.Debugf("Analyzing package: %s in %s", pkgName, currentPath)
+			s.analyzePackage(pkg, currentPath)
+		}
+
+		return nil
+	})
 }
 
 // shouldIncludeFile determines if a file should be included in the scan

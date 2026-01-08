@@ -45,3 +45,8 @@ vendor/
 # Environment
 .env
 .env.local
+
+
+
+# Demo
+demo/

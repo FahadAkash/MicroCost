@@ -15,6 +15,16 @@
 - **⚡ Performance Analysis** - Identifies bottlenecks and cost leaks in your call chains
 - **🔧 Production Ready** - Comprehensive logging, error handling, and configuration management
 
+## 🏛️ Enterprise Benefits
+
+For large organizations with complex microservices architectures, **MicroCost** provides:
+
+- **Accurate Cost Attribution** - Reveal the true drivers of cloud spend by tracing costs through the call graph. See how upstream services impact your downstream resource usage.
+- **Zombie Service Detection** - Identify expensive, orphaned services that have zero active dependents and can be safely decommissioned.
+- **Developer-Led FinOps** - Move cost awareness "left." Let engineers see the financial impact of architectural changes directly in their development environment or CI/CD pipeline.
+- **Cost Leak Detection** - Catch expensive API loops or unoptimized gRPC calls in real-time by combining static dependency maps with runtime Prometheus metrics.
+- **Architectural Decision Support** - Use data-driven cost analysis to decide whether to split a monolith or consolidate microservices based on projected infrastructure overhead.
+
 ## 📦 Installation
 
 ### From Source
