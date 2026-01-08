@@ -108,13 +108,19 @@ func runAll(cmd *cobra.Command, args []string) error {
 	renderer := visualizer.NewASCIIRenderer(logger, cfg.Output.ColorEnabled)
 
 	// Export call graph
-	exporter.ExportCallGraphJSON(callGraph, allOutput+"/callgraph.json")
+	if err := exporter.ExportCallGraphJSON(callGraph, allOutput+"/callgraph.json"); err != nil {
+		logger.WithError(err).Error("Error exporting call graph")
+	}
 
 	// Export metrics
-	exporter.ExportMetricsJSON(metricsSnapshot, allOutput+"/metrics.json")
+	if err := exporter.ExportMetricsJSON(metricsSnapshot, allOutput+"/metrics.json"); err != nil {
+		logger.WithError(err).Error("Error exporting metrics")
+	}
 
 	// Export cost report
-	exporter.ExportCostReportJSON(costReport, allOutput+"/cost-report.json")
+	if err := exporter.ExportCostReportJSON(costReport, allOutput+"/cost-report.json"); err != nil {
+		logger.WithError(err).Error("Error exporting cost report")
+	}
 
 	// Show ASCII report
 	asciiReport := renderer.RenderCostReport(costReport)

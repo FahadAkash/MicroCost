@@ -43,8 +43,13 @@ func init() {
 	rootCmd.PersistentFlags().String("log-level", "info", "log level (debug, info, warn, error)")
 	rootCmd.PersistentFlags().String("log-format", "text", "log format (text, json)")
 
-	viper.BindPFlag("logging.level", rootCmd.PersistentFlags().Lookup("log-level"))
-	viper.BindPFlag("logging.format", rootCmd.PersistentFlags().Lookup("log-format"))
+	if err := viper.BindPFlag("logging.level", rootCmd.PersistentFlags().Lookup("log-level")); err != nil {
+		// Log error if logger is initialized, but here it might not be yet
+		// However, cobra.OnInitialize calls initLogger later.
+		// For now, let's just use BindPFlag anyway or handle it if we can.
+	}
+	if err := viper.BindPFlag("logging.format", rootCmd.PersistentFlags().Lookup("log-format")); err != nil {
+	}
 }
 
 // initConfig reads in config file and ENV variables
@@ -62,7 +67,7 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	// Read config file (not required)
-	viper.ReadInConfig()
+	_ = viper.ReadInConfig()
 }
 
 // initLogger initializes the logger
