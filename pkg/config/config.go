@@ -159,7 +159,7 @@ func Load(configPath string) (*Config, error) {
 	// Try to read config file
 	if err := v.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
-			return nil, fmt.Errorf("error reading config file: %w", err)
+			return cfg, fmt.Errorf("error reading config file: %w", err)
 		}
 		// Config file not found; use defaults
 	}

@@ -132,13 +132,13 @@ func TestValidateAutoCorrect(t *testing.T) {
 func TestLoadNonExistentFile(t *testing.T) {
 	cfg, err := Load("/nonexistent/config.yaml")
 
-	// Should not error on missing file, just use defaults
-	if err != nil {
-		t.Errorf("Unexpected error for missing config: %v", err)
+	// If explicit path is provided and it doesn't exist, it should return an error
+	if err == nil {
+		t.Error("Expected error for non-existent explicit config path")
 	}
 
 	if cfg == nil {
-		t.Error("Config should not be nil even with missing file")
+		t.Error("Config should not be nil even with error")
 	}
 }
 
