@@ -20,7 +20,8 @@ output/
 !go.mod
 !go.sum
 callgraph.*
-metrics.*
+metrics.json
+metrics.yaml
 cost-report.*
 *.html
 

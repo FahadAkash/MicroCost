@@ -82,7 +82,7 @@ jobs:
       run: go build -v -o microcost main.go
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: microcost-binary
         path: microcost
